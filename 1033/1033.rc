@@ -1,0 +1,253 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "../resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 6,0,2,1300
+ PRODUCTVERSION 2,5,0,4
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x29L
+#else
+ FILEFLAGS 0x28L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "MicroCai's\0"
+            VALUE "CompanyName", "MicroApplicationLib\0"
+            VALUE "FileDescription", "English suport for PrtSc\0"
+            VALUE "FileVersion", "6, 0, 2, 1300\0"
+            VALUE "InternalName", "PrintSreen\0"
+            VALUE "LegalCopyright", "Copyright ? 2008\0"
+            VALUE "LegalTrademarks", "Free Software\0"
+            VALUE "OriginalFilename", "res.dll\0"
+            VALUE "PrivateBuild", "en-us\0"
+            VALUE "ProductName", "PrtSc\0"
+            VALUE "ProductVersion", "2, 5, 0, 4\0"
+            VALUE "SpecialBuild", "1033\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "../resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+WYN                     BITMAP  DISCARDABLE     "res\\wyn.bmp"
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_SETTING DIALOG DISCARDABLE  200, 100, 227, 118
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "config"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,170,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,170,28,50,14
+    GROUPBOX        "Hotkey settings",IDC_STATIC,7,7,152,104
+    CONTROL         "HotKey1",IDC_HOTKEY1,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,65,20,88,13
+    LTEXT           "CutRegion:",IDC_STATIC,13,71,38,9
+    LTEXT           "PrintActive:",IDC_STATIC,13,46,49,9
+    CONTROL         "HotKey1",IDC_HOTKEY2,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,65,44,88,13
+    LTEXT           "PrintScreen:",IDC_STATIC,13,20,44,9
+    CONTROL         "HotKey1",IDC_HOTKEY3,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,65,68,88,13
+    LTEXT           "Exit:",IDC_STATIC,13,99,22,9
+    CONTROL         "HotKey1",IDC_HOTKEY4,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,65,98,88,13
+    GROUPBOX        "cursor",IDC_STATIC,171,59,49,49
+    CONTROL         "self define",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,174,71,46,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+JUNK MENU DISCARDABLE 
+BEGIN
+    POPUP "pop"
+    BEGIN
+        MENUITEM "Who am I?",                   IDM_WHOAMI
+        MENUITEM "VK code",                     IDM_VIEWVKMAP
+        MENUITEM "Edit config file",            IDM_EDIT_INI
+    END
+END
+
+MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "popup"
+    BEGIN
+        MENUITEM "PrintScreen",                 IDM_PRTSC
+        MENUITEM "Cut&Region",                  IDM_CUTRGN
+        MENUITEM SEPARATOR
+        MENUITEM "Develop notes",               IDM_DEVNOTE
+        MENUITEM "configure",                   IDM_SETUP
+        MENUITEM "Help",                        IDM_HELP
+        MENUITEM SEPARATOR
+        POPUP "Language"
+        BEGIN
+            MENUITEM "English",                     IDM_LANG_EN, CHECKED
+            MENUITEM "Chinese",                     IDM_LANG_CN
+        END
+        MENUITEM "Exit",                        IDM_EXIT
+    END
+END
+
+VIEWER MENU DISCARDABLE 
+BEGIN
+    POPUP "popup"
+    BEGIN
+        MENUITEM "AutoStretch",                 IDM_AUTOSTRECH
+        MENUITEM "Magnify",                     IDM_ZOOM_B
+        MENUITEM "Original",                    IDM_ZOOM_ORIG
+        MENUITEM "Shrink",                      IDM_ZOOM_S
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_DIALOG_SETTING, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 220
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 111
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXT
+//
+
+1                       TEXT    DISCARDABLE     "readme.en.txt"
+2                       TEXT    DISCARDABLE     "res\\JunkMainText.txt"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_HOTKEYERRINFO       "Hotkey Conflict"
+    IDS_HOTKEYERRTITLE      "You'd better reconfigure"
+    IDS_OnExitInfo          "Thank you for using!"
+    IDS_OnExitTitle         "Good bye! ^_^"
+    IDS_DEVNOTECAPTION      "MicroCai's develeping notes  "
+    IDS_JUNKCAPTION         "How can you know clicking with the middle mouse button?"
+    IDS_JENEE               "Hi,I'm jenee!"
+    IDS_CURWNDCAPTION       "Jenee, Please hold your mouse to define a region. Press any key to abort."
+    IDS_GTFLNMTITLE         "Save it,Jenee! Cancle to clipboard"
+    IDS_TOCLIPBOARD         "Copyed to clipboard"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

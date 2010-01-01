@@ -1,0 +1,242 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "../resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "../resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_SETTING DIALOG DISCARDABLE  200, 100, 217, 118
+STYLE DS_NOIDLEMSG | DS_3DLOOK | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | 
+    WS_VISIBLE | WS_CAPTION
+CAPTION "设置"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,167,7,44,14
+    PUSHBUTTON      "取消",IDCANCEL,167,28,44,14
+    GROUPBOX        "热键设置",IDC_STATIC,7,7,152,104
+    CONTROL         "HotKey1",IDC_HOTKEY1,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,65,17,88,13
+    LTEXT           "区域剪切:",IDC_STATIC,13,68,38,9
+    LTEXT           "抓取活动窗口",IDC_STATIC,13,43,49,9
+    CONTROL         "HotKey1",IDC_HOTKEY2,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,65,41,88,13
+    LTEXT           "抓取屏幕",IDC_STATIC,13,17,37,9
+    CONTROL         "HotKey1",IDC_HOTKEY3,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,65,65,88,13
+    LTEXT           "退出",IDC_STATIC,13,96,22,9
+    CONTROL         "HotKey1",IDC_HOTKEY4,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,65,98,88,13
+    GROUPBOX        "截图鼠标",IDC_STATIC,168,62,43,49
+    CONTROL         "自定义",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,171,72,37,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXT
+//
+
+1                       TEXT    DISCARDABLE     "readme.txt"
+2                       TEXT    DISCARDABLE     "res\\JunkMainText.txt"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+VIEWER MENU DISCARDABLE 
+BEGIN
+    POPUP "popup"
+    BEGIN
+        MENUITEM "自动扩展",                    IDM_AUTOSTRECH
+        MENUITEM "放大",                        IDM_ZOOM_B
+        MENUITEM "原始大小",                    IDM_ZOOM_ORIG
+        MENUITEM "缩小",                        IDM_ZOOM_S
+    END
+END
+
+MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "popup"
+    BEGIN
+        MENUITEM "截全屏",                      IDM_PRTSC
+        MENUITEM "截取部分",                    IDM_CUTRGN
+        MENUITEM SEPARATOR
+        MENUITEM "开发日志",                    IDM_DEVNOTE
+        MENUITEM "设置",                        IDM_SETUP
+        MENUITEM "提示",                        IDM_HELP
+        MENUITEM SEPARATOR
+        POPUP "语言"
+        BEGIN
+            MENUITEM "英文",                        IDM_LANG_EN
+            MENUITEM "中文",                        IDM_LANG_CN, CHECKED
+        END
+        MENUITEM "退出",                        IDM_EXIT
+    END
+END
+
+JUNK MENU DISCARDABLE 
+BEGIN
+    POPUP "pop"
+    BEGIN
+        MENUITEM "作者简介",                    IDM_WHOAMI
+        MENUITEM "虚拟键码",                    IDM_VIEWVKMAP
+        MENUITEM "编辑配置文件",                IDM_EDIT_INI
+    END
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 6,0,2,1300
+ PRODUCTVERSION 2,5,0,4
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x29L
+#else
+ FILEFLAGS 0x28L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "MicroCai's\0"
+            VALUE "CompanyName", "MicroApplicationLib\0"
+            VALUE "FileDescription", "Chinese suport for PrtSc\0"
+            VALUE "FileVersion", "6, 0, 2, 1300\0"
+            VALUE "InternalName", "PrintSreen\0"
+            VALUE "LegalCopyright", "Copyright ? 2008\0"
+            VALUE "LegalTrademarks", "Free Software\0"
+            VALUE "OriginalFilename", "res.dll\0"
+            VALUE "PrivateBuild", "zh-cn\0"
+            VALUE "ProductName", "PrtSc\0"
+            VALUE "ProductVersion", "2, 5, 0, 4\0"
+            VALUE "SpecialBuild", "2052\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_DIALOG_SETTING, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 211
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 111
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+WYN                     BITMAP  DISCARDABLE     "res\\wyn.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_HOTKEYERRINFO       "热键有冲突"
+    IDS_HOTKEYERRTITLE      "请最好重新设定热键"
+    IDS_OnExitInfo          "谢谢使用"
+    IDS_OnExitTitle         "再见, ^_^"
+    IDS_DEVNOTECAPTION      "开发笔记"
+    IDS_JUNKCAPTION         "你怎么想到要用中键点击托盘图标的呢？"
+    IDS_JENEE               "我是吴伊妮哦!"
+    IDS_CURWNDCAPTION       "妮子，用鼠标划出一个矩形裁剪区，按任意键取消"
+    IDS_GTFLNMTITLE         "妮子，保存吧，^_^(取消写入剪切板,双击放大查看)"
+    IDS_TOCLIPBOARD         "已放入剪切板"
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
