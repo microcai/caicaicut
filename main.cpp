@@ -1,14 +1,25 @@
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#ifdef WIN32
 #include "StdAfx.h"
 #include "resource.h"
-#include "PrtSc.h"/*
+#include "PrtSc.h"
+#endif
+
+#include <gtk/gtk.h>
+
+/*
 extern "C" {
 	WINBASEAPI DWORD WINAPI RtlGetLastWin32Error();
 };*/
+
 static BOOL WINAPI InitInstance(HINSTANCE hInstance)
 {
 	BOOL		ret;
-	WNDCLASS	wc;	
+	WNDCLASS	wc;
 	INITCOMMONCONTROLSEX InitCtrls;
 	InitCtrls.dwSize  = sizeof(INITCOMMONCONTROLSEX);
 	InitCtrls.dwICC	  = ICC_HOTKEY_CLASS ;
@@ -16,7 +27,7 @@ static BOOL WINAPI InitInstance(HINSTANCE hInstance)
 	InitCommonControls();
 	lstrcpy(inifile,
 #ifdef UNICODE
-		_wpgmptr); 
+		_wpgmptr);
 #else
 		_pgmptr);
 #endif
@@ -74,7 +85,7 @@ static BOOL WINAPI InitInstance(HINSTANCE hInstance)
 	wc.lpszClassName = _T("NoteWnd");
 	wc.lpfnWndProc = NoteWndProc;
 	ret &= RegisterClass(&wc);
-	
+
 	wc.cbWndExtra = 0;
 	wc.lpszClassName = _T("CutWnd");
 	wc.lpfnWndProc =CutWndProc;
@@ -122,7 +133,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE,LPTSTR,int)
 	return msg.wParam;
 }
 
-//全局变量
+//全锟街憋拷锟斤拷
 HINSTANCE	hInst,DllhInst;
 
 HWND	MainWnd;

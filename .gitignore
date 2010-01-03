@@ -1,0 +1,24 @@
+安装发行/
+.cproject
+.project
+ASM/
+Debug/
+autoscan.log
+build/
+PrtSc.dep
+PrtSc.ncb
+PrtSc.opt
+PrtSc.dsw
+PrtSc.clw
+PrtSc.aps
+.cdtconfigure.Build (GNU)
+Makefile.in
+Makefile
+missing
+install-sh
+depcomp
+configure
+aclocal.m4
+autom4te.cache/
+*~
+*.in

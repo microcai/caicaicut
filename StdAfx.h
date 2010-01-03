@@ -14,6 +14,7 @@
 #define	_WIN32_IE 0x501
 
 // Windows Header Files:
+#ifdef WIN32
 #include <windows.h>
 
 #include <tchar.h>
@@ -22,6 +23,6 @@
 #include <stdlib.h>
 #include <commctrl.h>
 #include <commdlg.h>
-
+#endif
 
 #endif // !defined(AFX_STDAFX_H__A9DB83DB_A9FD_11D0_BFD1_444553540000__INCLUDED_)
