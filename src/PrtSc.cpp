@@ -71,8 +71,8 @@ static BOOL	GetFileName(LPTSTR filename)
 	OPENFILENAME file={sizeof(OPENFILENAME)};
 	file.hInstance=hInst;
 	file.hwndOwner =MainWnd;
-	file.lpstrDefExt=TEXT("bmp");
-	file.lpstrFilter=TEXT("位图文件\0*.bmp\0\0JPEG格式(*.jpg)\0*.jpg\0CPG文件(*.CPG)\0*.cpg\0");
+	file.lpstrDefExt=TEXT("png");
+	file.lpstrFilter=TEXT("PNG格式(*.png)\0*.png\0位图文件\0*.bmp\0JPEG格式(*.jpg;*.jpeg)\0*.jpg;*.jpeg\0");
 	file.lpstrTitle= lpstrTitle;//TEXT("妮子，保存吧，^_^(取消写入剪切板,双击放大查看)");
 	file.nMaxFile=_MAX_PATH;
 	file.lpstrFile=filename;
@@ -80,7 +80,7 @@ static BOOL	GetFileName(LPTSTR filename)
 	file.Flags=OFN_EXPLORER|OFN_ENABLEHOOK|OFN_HIDEREADONLY|OFN_SHAREAWARE
 		|OFN_ENABLETEMPLATE|OFN_ENABLEINCLUDENOTIFY;
 	file.lpTemplateName = (LPTSTR)_T("tmplate");
-	return GetSaveFileName(&file);
+	return GetSaveFileName(&file);	
 }
 __declspec(thread)	static	HBITMAP	bmp;
 static UINT APIENTRY OFNHookProc(HWND hdlg,UINT message,WPARAM,LPARAM)
@@ -127,7 +127,7 @@ DWORD	WINAPI	StoreBMP(HBITMAP	hbmp)
 		}
 		return 0;
 	}
-	SaveBmpToFile(hbmp,filename,FT_BMP);
+	SaveBmpToFile(hbmp,filename);
 	delete[]filename;
 	return 0;
 }

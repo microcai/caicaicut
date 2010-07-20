@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Developer Studio generated include file.
-// Used by D:\My Documents\PrtSc\1033\1033.rc
+// Used by PrtSc.rc
 //
 #define IDD_DIALOG_SETTING              1
 #define IDS_HOTKEYERRINFO               1
@@ -28,14 +28,14 @@
 #define IDM_SETUP                       32789
 #define IDM_DEVNOTE                     32790
 #define IDM_CUTRGN                      32791
-#define IDM_PRTSC                       32792
+#define IDM_PRTSC                       1
 #define IDM_AUTOSTRECH                  32794
 #define IDM_ZOOM_B                      32795
 #define IDM_ZOOM_S                      32796
 #define IDM_ZOOM_ORIG                   32797
 #define IDM_WHOAMI                      32798
-#define IDM_VIEWVKMAP                   32801
 #define IDM_LANG_CN                     32799
+#define IDM_VIEWVKMAP                   32801
 #define IDM_EDIT_INI                    32802
 #define IDM_LANG_EN                     32803
 

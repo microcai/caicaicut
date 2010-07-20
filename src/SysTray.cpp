@@ -5,7 +5,7 @@
 static TCHAR	szTip[]=_T("Ð¡²ËÕýÔÚ´ýÃü£¡");
 void	StaysInsysTray()
 {
-	NOTIFYICONDATA n={sizeof(NOTIFYICONDATA)};
+	IE6_NOTIFYICONDATA n={sizeof(n)};
 	n.hIcon=LoadIcon(hInst,_T("Icon_In_Tray"));
 	n.hWnd=MainWnd;
 	n.uCallbackMessage = WM_TIPS;
@@ -14,11 +14,11 @@ void	StaysInsysTray()
 	if(n.uID == 0)
 		n.uID=GlobalAddAtom(_T("PrtSc_icon"));
 	lstrcpy(n.szTip,szTip);
-	Shell_NotifyIcon(NIM_ADD,&n);
+	Shell_NotifyIcon(NIM_ADD,(PNOTIFYICONDATA)&n);
 }
 void __fastcall	FlashTray(LPTSTR info,LPTSTR infoTitle /*= NULL*/,DWORD dwInfoFlags/*=0*/)
 {
-	NOTIFYICONDATA n={sizeof(NOTIFYICONDATA)};
+	IE6_NOTIFYICONDATA n={sizeof(n)};
 	n.hWnd=MainWnd;
 	n.uCallbackMessage = WM_TIPS;
 	n.uFlags=NIF_MESSAGE|NIF_INFO;
@@ -28,16 +28,16 @@ void __fastcall	FlashTray(LPTSTR info,LPTSTR infoTitle /*= NULL*/,DWORD dwInfoFl
 	n.uID=GlobalFindAtom(_T("PrtSc_icon"));
 	n.uTimeout = 500;
 	n.dwInfoFlags = dwInfoFlags;
-	Shell_NotifyIcon(NIM_MODIFY,&n);
+	Shell_NotifyIcon(NIM_MODIFY,(PNOTIFYICONDATA)&n);
 }
 void	RemoveTray()
 {
-	NOTIFYICONDATA n={sizeof(NOTIFYICONDATA)};
+	IE6_NOTIFYICONDATA n={sizeof(n)};
 	n.hWnd=MainWnd;
 	n.uCallbackMessage=WM_TIPS;
 	n.uFlags=NIF_MESSAGE;
 	n.uID=GlobalFindAtom(_T("PrtSc_icon"));
-	Shell_NotifyIcon(NIM_DELETE,&n);
+	Shell_NotifyIcon(NIM_DELETE,(PNOTIFYICONDATA)&n);
 
 	GlobalDeleteAtom((ATOM)(n.uID));
 	while( 	n.uID=GlobalFindAtom(_T("PrtSc_icon")) )

@@ -30,13 +30,6 @@ typedef struct{
 	POINTS	central;
 }ShowPicClass;
 
-enum ImageFileType{
-	FT_BMP,
-	FT_PNG,
-	FT_JPEG
-};
-
-
 //WindowProcs
 
 LRESULT CALLBACK NoteWndProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam);
@@ -56,7 +49,7 @@ BOOL __fastcall	SaveHotKeyCfg(HWND);
 void	CutRegion();
 void	CutWindow(HWND hwnd);
 void	CutScreen(RECT rc);
-BOOL	SaveBmpToFile(HBITMAP,LPTSTR,ImageFileType);
+BOOL	SaveBmpToFile(HBITMAP,LPTSTR);
 
 //SysTray Funcs
 void	StaysInsysTray();

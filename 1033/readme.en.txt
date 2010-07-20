@@ -15,6 +15,8 @@ And thanks to jenee, she gives me the chance.
 Change log
 Version	Change note
 -----------------------------------------------
+2.7.0	Add support for png & jpeg file format
+-----------------------------------------------
 2.6.0	A lot of bugs fixed and add a small function
 2.5.3	More translated text.
 2.5.2	Select the other language if it can't load current language DLL

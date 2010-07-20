@@ -1,6 +1,4 @@
 #include "StdAfx.h"
-#include <ole.h>
-#include <ole2.h>
 
 #include <richedit.h>
 #include <richole.h>
@@ -21,15 +19,11 @@ DWORD WINAPI	ViewJunk(void*)
 	}
 	ShowWindow(m,SW_SHOW);
 	UpdateWindow(m);
-	__try{
 
-		while(GetMessage(&msg,0,0,0))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-	}__except(EXCEPTION_EXECUTE_HANDLER)
+	while(GetMessage(&msg,0,0,0))
 	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
 	return msg.lParam;
 }

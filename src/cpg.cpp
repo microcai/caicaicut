@@ -5,7 +5,7 @@
 //void _stdcall RGB2YUV(size_t size,LPBYTE lpRGB,LPBYTE lpY, LPBYTE lpU,LPBYTE lpV);
 
 typedef struct{
-	TCHAR		pszFile[MAXPATH];
+	TCHAR		pszFile[_MAX_PATH];
 	BITMAPINFO	bi;
 	HBITMAP		hBMP;
 	HDC			hdc;

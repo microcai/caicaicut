@@ -1,36 +1,24 @@
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#ifdef WIN32
 #include "StdAfx.h"
 #include "resource.h"
 #include "PrtSc.h"
-#endif
-
 #include <gtk/gtk.h>
-
 /*
 extern "C" {
 	WINBASEAPI DWORD WINAPI RtlGetLastWin32Error();
 };*/
-
 static BOOL WINAPI InitInstance(HINSTANCE hInstance)
 {
 	BOOL		ret;
-	WNDCLASS	wc;
+	WNDCLASS	wc;	
 	INITCOMMONCONTROLSEX InitCtrls;
 	InitCtrls.dwSize  = sizeof(INITCOMMONCONTROLSEX);
 	InitCtrls.dwICC	  = ICC_HOTKEY_CLASS ;
 	InitCommonControlsEx(&InitCtrls);
 	InitCommonControls();
-	lstrcpy(inifile,
-#ifdef UNICODE
-		_wpgmptr);
-#else
-		_pgmptr);
-#endif
+
+	GetModuleFileName(hInstance,inifile,sizeof(inifile));
+
 	LPTSTR	p=inifile + lstrlen(inifile);
 
 	while( *p != '\\' && p!=inifile )--p;	*p=0;
@@ -85,7 +73,7 @@ static BOOL WINAPI InitInstance(HINSTANCE hInstance)
 	wc.lpszClassName = _T("NoteWnd");
 	wc.lpfnWndProc = NoteWndProc;
 	ret &= RegisterClass(&wc);
-
+	
 	wc.cbWndExtra = 0;
 	wc.lpszClassName = _T("CutWnd");
 	wc.lpfnWndProc =CutWndProc;
@@ -111,10 +99,8 @@ static BOOL WINAPI IsOnlyInstance()
 	return 1;
 }
 
-
 int WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE,LPTSTR,int)
 {
-
 	hInst=hInstance;
 	if(!InitInstance(hInst))return -1;
 	if(!IsOnlyInstance())return 1;
@@ -129,11 +115,10 @@ int WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE,LPTSTR,int)
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-//	ExitThread(msg.wParam);
 	return msg.wParam;
 }
 
-//全锟街憋拷锟斤拷
+//全局变量
 HINSTANCE	hInst,DllhInst;
 
 HWND	MainWnd;

@@ -16,7 +16,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Chinese (P.R.C.) resources
+// Chinese (中国) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 #ifdef _WIN32
@@ -28,11 +28,10 @@ LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 //
 // Icon
 //
-
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-ICON_IN_TRAY            ICON    DISCARDABLE     "res\\tray.ico"
 PRTSC                   ICON    DISCARDABLE     "res\\PrtSc.ico"
+ICON_IN_TRAY            ICON    DISCARDABLE     "res\\tray.ico"
 RICHEDIT                ICON    DISCARDABLE     "res\\notepad.ico"
 ICON_IN_TRAY_2          ICON    DISCARDABLE     "res\\tray2.ico"
 
@@ -85,8 +84,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 6,0,2,1300
- PRODUCTVERSION 2,5,0,4
+ FILEVERSION 6,2,2,1300
+ PRODUCTVERSION 2,7,0,6
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -104,14 +103,14 @@ BEGIN
             VALUE "Comments", "小蔡作品\0"
             VALUE "CompanyName", "MicroApplicationLib\0"
             VALUE "FileDescription", "小菜的截屏软件\0"
-            VALUE "FileVersion", "6, 0, 2, 1300\0"
+            VALUE "FileVersion", "6, 2, 2, 1300\0"
             VALUE "InternalName", "PrintSreen\0"
             VALUE "LegalCopyright", "Copyright ? 2008\0"
             VALUE "LegalTrademarks", "Free Software\0"
             VALUE "OriginalFilename", "PrtSc.exe\0"
             VALUE "PrivateBuild", "吴伊妮\0"
             VALUE "ProductName", "PrtSc\0"
-            VALUE "ProductVersion", "2, 5, 0, 4\0"
+            VALUE "ProductVersion", "2, 7, 0, 6\0"
             VALUE "SpecialBuild", "为了吴伊妮\0"
         END
     END
@@ -169,7 +168,7 @@ BEGIN
     IDS_ERRCAPTION2         "无法找到汉语资源，试试英语？"
 END
 
-#endif    // Chinese (P.R.C.) resources
+#endif    // Chinese (中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
