@@ -1,0 +1,5 @@
+
+EXTRA_DIST = res 
+
+SUBDIRS = src 1033 2052
+
