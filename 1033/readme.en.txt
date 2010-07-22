@@ -15,7 +15,9 @@ And thanks to jenee, she gives me the chance.
 Change log
 Version	Change note
 -----------------------------------------------
+2.8.0	AnimatedWindow. Improve image scalling when view it.
 2.7.0	Add support for png & jpeg file format
+	Continue Develop on 2010 July
 -----------------------------------------------
 2.6.0	A lot of bugs fixed and add a small function
 2.5.3	More translated text.

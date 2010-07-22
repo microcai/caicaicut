@@ -10,8 +10,11 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#define  WINVER 0x500
 #define _WIN32_WINNT 0x500
 #define	_WIN32_IE 0x601
+
+#ifdef  _WIN32
 
 // Windows Header Files:
 #include <windows.h>
@@ -19,7 +22,6 @@
 #include <tchar.h>
 #include <shellapi.h>
 
-#include <stdlib.h>
 #include <commctrl.h>
 #include <commdlg.h>
 
@@ -55,5 +57,12 @@ typedef struct {
 		DWORD dwInfoFlags;
 		GUID guidItem;
 } IE6_NOTIFYICONDATA;
+
+#else
+#include <gtk/gtk.h>
+#endif
+
+#include <stdlib.h>
+#include <stdio.h>
 
 #endif // !defined(AFX_STDAFX_H__A9DB83DB_A9FD_11D0_BFD1_444553540000__INCLUDED_)

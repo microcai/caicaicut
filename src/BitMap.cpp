@@ -156,9 +156,9 @@ static	BOOL SaveBmpToPNGfile(HBITMAP hbmp,LPTSTR file)
 				
 				Red=(Color&0x1F);
 
-				rows_bytes[i][k] = Red * 256  / 32 +0.5;
-				rows_bytes[i][k+1] = Green * 256  / 64 +0.5;
-				rows_bytes[i][k+2] = Blue * 256  / 32 +0.5;
+				rows_bytes[i][k] = (BYTE)(Red * 256  / 32 +0.5);
+				rows_bytes[i][k+1] = (BYTE)(Green * 256  / 64 +0.5);
+				rows_bytes[i][k+2] = (BYTE)(Blue * 256  / 32 +0.5);
 			}
 		}
 	}
@@ -284,9 +284,9 @@ static BOOL SaveBmpToJPGfile(HBITMAP hbmp,LPTSTR file)
 				
 				Blue=(Color&0x1F);
 				
-				row_pointer[i*3]= Red * 256  / 32 +0.5;
-				row_pointer[i*3+1] = Green * 256  / 64 +0.5;
-				row_pointer[i*3+2] = Blue * 256  / 32 +0.5;
+				row_pointer[i*3]= (BYTE)(Red * 256  / 32 +0.5);
+				row_pointer[i*3+1] = (BYTE)(Green * 256  / 64 +0.5);
+				row_pointer[i*3+2] = (BYTE)(Blue * 256  / 32 +0.5);
 			}
 			jpeg_write_scanlines(&cinfo, &row_pointer, 1);			
 		}		

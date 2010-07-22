@@ -1,9 +1,10 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Developer Studio generated include file.
-// Used by PrtSc.rc
+// Used by F:\caicaicut\1033\1033.rc
 //
 #define IDD_DIALOG_SETTING              1
 #define IDS_HOTKEYERRINFO               1
+#define IDM_PRTSC                       1
 #define IDS_HOTKEYERRTITLE              2
 #define IDS_OnExitInfo                  3
 #define IDS_OnExitTitle                 4
@@ -28,7 +29,6 @@
 #define IDM_SETUP                       32789
 #define IDM_DEVNOTE                     32790
 #define IDM_CUTRGN                      32791
-#define IDM_PRTSC                       1
 #define IDM_AUTOSTRECH                  32794
 #define IDM_ZOOM_B                      32795
 #define IDM_ZOOM_S                      32796

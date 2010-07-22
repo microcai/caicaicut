@@ -16,7 +16,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Chinese (中国) resources
+// Chinese (P.R.C.) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 #ifdef _WIN32
@@ -28,6 +28,7 @@ LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 //
 // Icon
 //
+
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 PRTSC                   ICON    DISCARDABLE     "res\\PrtSc.ico"
@@ -41,7 +42,7 @@ ICON_IN_TRAY_2          ICON    DISCARDABLE     "res\\tray2.ico"
 //
 
 TMPLATE DIALOGEX 0, 0, 218, 100
-STYLE DS_3DLOOK | DS_CONTROL | WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS
+STYLE DS_NOIDLEMSG | DS_CONTROL | WS_CHILD | WS_VISIBLE | WS_BORDER
 EXSTYLE WS_EX_TRANSPARENT
 FONT 10, "System", 0, 0, 0x1
 BEGIN
@@ -84,8 +85,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 6,2,2,1300
- PRODUCTVERSION 2,7,0,6
+ FILEVERSION 9,2,2,1300
+ PRODUCTVERSION 2,8,0,1355
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -103,14 +104,14 @@ BEGIN
             VALUE "Comments", "小蔡作品\0"
             VALUE "CompanyName", "MicroApplicationLib\0"
             VALUE "FileDescription", "小菜的截屏软件\0"
-            VALUE "FileVersion", "6, 2, 2, 1300\0"
+            VALUE "FileVersion", "9, 2, 2, 1300\0"
             VALUE "InternalName", "PrintSreen\0"
             VALUE "LegalCopyright", "Copyright ? 2008\0"
             VALUE "LegalTrademarks", "Free Software\0"
             VALUE "OriginalFilename", "PrtSc.exe\0"
             VALUE "PrivateBuild", "吴伊妮\0"
             VALUE "ProductName", "PrtSc\0"
-            VALUE "ProductVersion", "2, 7, 0, 6\0"
+            VALUE "ProductVersion", "2, 8, 0, 1355\0"
             VALUE "SpecialBuild", "为了吴伊妮\0"
         END
     END
@@ -168,7 +169,7 @@ BEGIN
     IDS_ERRCAPTION2         "无法找到汉语资源，试试英语？"
 END
 
-#endif    // Chinese (中国) resources
+#endif    // Chinese (P.R.C.) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

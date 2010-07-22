@@ -4,30 +4,6 @@
 #include "resource.h"
 #include "PrtSc.h"
 
-static void   __inline SetScaling(HWND hwnd,float Scale){SetWindowLong(hwnd,FIELD_OFFSET(ShowPicClass,scaling), *((DWORD*)&Scale));}
-static DWORD	WINAPI	CreateViewPicWnd(void*bmp)
-{
-	SetThreadLocale(locale_ID);
-	HWND	pic;
-	MSG		msg;
-	pic=CreateWindowEx(0,_T("ShowPicClass"),_T("截图查看(双击保存)"),
-		WS_CAPTION|WS_SYSMENU|WS_THICKFRAME|WS_MINIMIZEBOX|WS_MAXIMIZEBOX,
-		CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,
-		0,0,hInst,0);
-	SendMessage(pic,STM_SETIMAGE,0,(LPARAM)bmp);
-	SetWindowLong(pic,0,GetWindowLong(pic,0)|SHP_DELBMPONCLOSE);
-	SendMessage(pic,WM_SETFLAG,0,0);
-	SetScaling(pic,5.0);
-	ShowWindow(pic,SW_SHOW);
-	UpdateWindow(pic);
-	
-	while (GetMessage(&msg, NULL, 0, 0))
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-	return msg.wParam;
-}
 
 static float  __inline GetScaling(HWND hwnd)
 {
@@ -37,22 +13,22 @@ static float  __inline GetScaling(HWND hwnd)
 	return p[0];
 }
 
-static int	FillRect(HDC hdc,int l,int t,int r,int b)
+static void	__fastcall Repaint(HWND	hWnd,RECT & updata,RECT& upbmp,HDC hdc)
 {
-	RECT	rc;
-	SetRect(&rc,l,t,r,b);
-	return FillRect(hdc,&rc,(HBRUSH)1);
-}
-
-static void	__fastcall Repaint(HWND	hWnd,RECT & updata,RECT& upbmp)
-{
+	PAINTSTRUCT ps={0};
 	HDRAWDIB	hdd;
-	HDC			hdc;
 	HBITMAP		hbmp;
 	BITMAPINFOHEADER	bi={sizeof(bi)};
 	void*		bits=LocalAlloc(LPTR,4096*4096*5);
+	
+	POINTS	bmprc;
+	*((DWORD*)(&bmprc))= GetWindowLong(hWnd,FIELD_OFFSET(ShowPicClass,bmRC));
+
 	hdd=DrawDibOpen();
-	hdc=GetDC(hWnd);
+
+	if(!hdc)
+		hdc =BeginPaint(hWnd,&ps);
+
 	hbmp=(HBITMAP)GetWindowLong(hWnd,FIELD_OFFSET(ShowPicClass,hbmp));
 	
 	BITMAP	bm;
@@ -62,9 +38,12 @@ static void	__fastcall Repaint(HWND	hWnd,RECT & updata,RECT& upbmp)
 	bi.biWidth = bm.bmWidth;
 	bi.biPlanes = 1;
 	bi.biHeight = bm.bmHeight ;
+	
+	ExcludeClipRect(hdc,updata.left,updata.top,updata.right,updata.bottom);
 
-	DrawDibDraw(hdd,hdc,0,0,1280,720,
-		&bi,bits,0,0,bm.bmWidth ,bm.bmHeight,0);
+	FillRect(hdc,&ps.rcPaint,(HBRUSH)1);
+	
+	SelectClipRgn(hdc,NULL);
 
 	GetDIBits(hdc,hbmp,0,bi.biHeight,bits,(LPBITMAPINFO)&bi,DIB_RGB_COLORS);
 
@@ -72,48 +51,15 @@ static void	__fastcall Repaint(HWND	hWnd,RECT & updata,RECT& upbmp)
 		&bi,bits,upbmp.left,upbmp.top,upbmp.right-upbmp.left,upbmp.bottom-upbmp.top,0);
 	
 	LocalFree(bits);
-	ReleaseDC(hWnd,hdc);
-	ValidateRect(hWnd,0);
+
 	DrawDibClose(hdd);
+	
+	if(ps.hdc)
+		EndPaint(hWnd,&ps);
+	
 }
-static void	__fastcall rePaint(HWND	hWnd,RECT & updata,RECT& upbmp)
-{
-	HDC		hdc;
-	HDC		mdc;
-	HDC		tmp;
-	HBITMAP hbmp;
-	HRGN	clip;
-#if 0
-	PAINTSTRUCT	ps;
-#endif
 
-//	hdc=BeginPaint(hWnd,&ps);
-	clip=CreateRectRgnIndirect(&updata);
-	hdc=GetDC(hWnd);
-	SelectClipRgn(hdc,clip);
-	mdc=CreateCompatibleDC(hdc);
-	tmp=CreateCompatibleDC(hdc);
-
-	hbmp=(HBITMAP)GetWindowLong(hWnd,FIELD_OFFSET(ShowPicClass,hbmp));
-	DeleteObject(SelectObject(mdc,hbmp));
-
-	hbmp=CreateCompatibleBitmap(hdc,GetDeviceCaps(hdc,HORZRES),GetDeviceCaps(hdc,VERTRES));
-	DeleteObject(SelectObject(tmp,hbmp));
-
-
-	StretchBlt(tmp,updata.left,updata.top,updata.right-updata.left,updata.bottom-updata.top, mdc,
-		upbmp.left,upbmp.top,upbmp.right -upbmp.left ,upbmp.bottom-upbmp.top ,SRCCOPY);
-
-	BitBlt(hdc,0,0,GetDeviceCaps(hdc,HORZRES),GetDeviceCaps(hdc,VERTRES),tmp,0,0,SRCCOPY);
-	DeleteDC(mdc);
-	DeleteDC(tmp);
-	//EndPaint(hWnd,&ps);
-	ReleaseDC(hWnd,hdc);
-	DeleteObject(clip);
-	DeleteObject(hbmp);
-	ValidateRect(hWnd,0);
-}
-static void OnPaint(HWND hwnd)
+static void OnPaint(HWND hwnd,HDC hdc)
 {
 	long	flag;
 	RECT	updata;
@@ -134,17 +80,22 @@ static void OnPaint(HWND hwnd)
 	//得到图片大小
 	*((DWORD*)(&bmprc))= GetWindowLong(hwnd,FIELD_OFFSET(ShowPicClass,bmRC));
 	//得到更新区域
-	GetUpdateRect(hwnd,&updata,1);
-	updata.right+=5;
-	updata.left-=5;
-	updata.top-=5;
-	updata.bottom+=5;
+//	GetUpdateRect(hwnd,&updata,1);
+//	updata.right+=5;
+//	updata.left-=5;/
+//	updata.top-=5;
+//	updata.bottom+=5;
 	GetClientRect(hwnd,&updata);
-
 
 	//得到视图中心在图片上的位置
 	if(flag & SHP_ZOOMAUTOSTRECH )
 	{
+		GetClientRect(hwnd,&updata);
+		upbmp.left = 0;
+		upbmp.right = bmprc.x;
+		upbmp.top = 0;
+		upbmp.bottom = bmprc.y;
+		
 		viewcentral.x = bmprc.x/2,viewcentral.y = bmprc.y/2;
 		//得到更新区域对应于图片的矩形区域 --> upbmp;
 		if(flag & SHP_ZOOMKEEPRATIO)
@@ -170,25 +121,90 @@ static void OnPaint(HWND hwnd)
 			upbmp.bottom = bmprc.y;
 			upbmp.right = bmprc.x;
 		}
-		upbmp.left  =(long)(((float)updata.left)  /clientRect.right * (upbmp.right-upbmp.left));
-		upbmp.right =(long)(((float)updata.right) /clientRect.right * (upbmp.right-upbmp.left));
-		upbmp.top   =(long)(((float)updata.top )  /clientRect.bottom* (upbmp.bottom - upbmp.top));
-		upbmp.bottom=(long)(((float)updata.bottom)/clientRect.bottom* (upbmp.bottom - upbmp.top));
+//		upbmp.left  =(long)(((float)updata.left)  /clientRect.right * (upbmp.right-upbmp.left));
+//		upbmp.right =(long)(((float)updata.right) /clientRect.right * (upbmp.right-upbmp.left));
+//		upbmp.top   =(long)(((float)updata.top )  /clientRect.bottom* (upbmp.bottom - upbmp.top));
+//		upbmp.bottom=(long)(((float)updata.bottom)/clientRect.bottom* (upbmp.bottom - upbmp.top));
 	}
 	else 
 	{
+
 		*((DWORD*)(&viewcentral))=GetWindowLong(hwnd,FIELD_OFFSET(ShowPicClass,central));
-		//得到更新区域对应于图片的矩形区域 --> upbmp;
-		Scale = GetScaling(hwnd);
-		upbmp.left = (long)(viewcentral.x - (central.x - updata.left)/Scale);
-		upbmp.right= (long)(viewcentral.x - (central.x - updata.right)/Scale);
-		upbmp.top  = (long)(viewcentral.y - (central.y -updata.top)/Scale);
-		upbmp.bottom=(long)(viewcentral.y - (central.y - updata.bottom)/Scale);
+		
+		//缩放率
+		Scale =1/GetScaling(hwnd);
+
+		//依据缩放率调整
+
+		upbmp.left = viewcentral.x - (updata.right - updata.left) * Scale / 2;
+		upbmp.right = viewcentral.x + (updata.right - updata.left) * Scale / 2;
+
+		upbmp.top = viewcentral.y -  (updata.bottom - updata.top) * Scale / 2;
+		upbmp.bottom = viewcentral.y + (updata.bottom - updata.top) * Scale / 2;
+
+		
+		if(upbmp.top < 0)
+		{
+			updata.top += ((-upbmp.top)/Scale+0.5);
+			upbmp.top =0;
+		}
+
+		if (upbmp.left < 0)
+		{
+			updata.left  += ((-upbmp.left)/Scale+0.5);
+			upbmp.left = 0;
+		}
+
+		if(upbmp.right > bmprc.x)
+		{
+			updata.right -= ((upbmp.right - bmprc.x)/Scale + 0.5);
+			upbmp.right = bmprc.x;
+		}
+		
+		if(upbmp.bottom > bmprc.y)
+		{
+			updata.bottom -= (  (upbmp.bottom - bmprc.y)/Scale+0.5  );
+			upbmp.bottom = bmprc.y;		
+		}
+		
 	}
 	//把位图里要更新的部分画到更新区域
-	rePaint(hwnd,updata,upbmp);
-//	Repaint(hwnd,updata,upbmp);
+	//rePaint(hwnd,updata,upbmp);
+	Repaint(hwnd,updata,upbmp,hdc);
 }
+
+static void   __inline SetScaling(HWND hwnd,float Scale){SetWindowLong(hwnd,FIELD_OFFSET(ShowPicClass,scaling), *((DWORD*)&Scale));}
+static DWORD	WINAPI	CreateViewPicWnd(void*bmp)
+{
+	SetThreadLocale(locale_ID);
+	HWND	pic;
+	MSG		msg;
+	pic=CreateWindowEx(0,_T("ShowPicClass"),_T("截图查看(双击保存)"),
+		WS_CAPTION|WS_SYSMENU|WS_THICKFRAME|WS_MINIMIZEBOX|WS_MAXIMIZEBOX,
+		CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,
+		0,0,hInst,0);
+	SendMessage(pic,STM_SETIMAGE,0,(LPARAM)bmp);
+	SetWindowLong(pic,0,GetWindowLong(pic,0)|SHP_DELBMPONCLOSE);
+	SendMessage(pic,WM_SETFLAG,0,0);
+	SetScaling(pic,5.0);
+
+	AnimateWindow(pic,500,AW_ACTIVATE|AW_VER_NEGATIVE|AW_SLIDE);
+	
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+	return msg.wParam;
+}
+
+static int	FillRect(HDC hdc,int l,int t,int r,int b)
+{
+	RECT	rc;
+	SetRect(&rc,l,t,r,b);
+	return FillRect(hdc,&rc,(HBRUSH)1);
+}
+
 static void	OnCommand(HWND	hWnd,WPARAM wParam,LPARAM lParam)
 {
 	switch(wParam & 0xFFFF)
@@ -247,6 +263,7 @@ static void	OnMouseMove(HWND hwnd,UINT	message,WPARAM wParam,LPARAM lParam)
 		p.y = (lParam >>16 );
 	}
 }
+
 LRESULT	WINAPI	ShowPicClassWndProc(HWND hWnd,UINT	message,WPARAM wParam,LPARAM lParam)
 {
 	POINTS	c;
@@ -308,6 +325,8 @@ LRESULT	WINAPI	ShowPicClassWndProc(HWND hWnd,UINT	message,WPARAM wParam,LPARAM l
 	case WM_LBUTTONDBLCLK:
 		CloseHandle(CreateThread(0,0,(LPTHREAD_START_ROUTINE)StoreBMP,
 			(LPVOID)GetWindowLong(hWnd,FIELD_OFFSET(ShowPicClass,hbmp)),0,0));
+		EnableWindow(hWnd,FALSE);
+		AnimateWindow(hWnd,1500,AW_HIDE|AW_BLEND);
 		SendMessage(hWnd,STM_SETIMAGE,0,0);
 		SendMessage(hWnd,WM_CLOSE,0,0);
 		break;
@@ -325,8 +344,12 @@ LRESULT	WINAPI	ShowPicClassWndProc(HWND hWnd,UINT	message,WPARAM wParam,LPARAM l
 		break;
 	case WM_COMMAND:
 		OnCommand(hWnd,wParam,lParam);
+		break;
 	case WM_PAINT:
-		OnPaint(hWnd);
+		OnPaint(hWnd,NULL);
+		break;
+	case WM_PRINTCLIENT:
+		OnPaint(hWnd,(HDC)wParam);
 		break;
 	case WM_CLOSE:
 		DeleteObject((HBITMAP)GetWindowLong(hWnd,FIELD_OFFSET(ShowPicClass,hbmp)));

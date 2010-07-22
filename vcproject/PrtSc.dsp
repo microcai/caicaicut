@@ -52,10 +52,10 @@ RSC=rc.exe
 # ADD RSC /l 0x804 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# SUBTRACT BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib comctl32.lib comdlg32.lib shell32.lib vfw32.lib libpng.lib libjpeg.lib zlib.lib /subsystem:windows /pdb:none /machine:I386 /out:"../安装发行/PrtSc.exe" /libpath:"F:\lpng143\projects\visualc6\Win32_LIB_Release" /libpath:"f:\jpeg-8b"
+# ADD LINK32 Vfw32.lib glu32.lib opengl32.lib kernel32.lib user32.lib gdi32.lib comctl32.lib comdlg32.lib shell32.lib vfw32.lib libpng.lib libjpeg.lib zlib.lib /subsystem:windows /pdb:none /machine:I386 /out:"../安装发行/PrtSc.exe" /libpath:"F:\lpng143\projects\visualc6\Win32_LIB_Release" /libpath:"f:\jpeg-8b"
 # SUBTRACT LINK32 /nologo /map /debug /nodefaultlib
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
@@ -76,7 +76,8 @@ PostBuild_Cmds=cd 安装发行	bind PrtSc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /G6 /MDd /W3 /Gm /Gi /vmg /GR /GX /ZI /Od /I ".." /I "..\..\jpeg-8b" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FR /Yu"stdafx.h" /FD /GZ /c
+# ADD CPP /nologo /G6 /MDd /W3 /Gm /Gi /vmg /GR /GX /ZI /Od /I ".." /I "..\..\jpeg-8b" /D "_WIN32" /D "_DEBUG" /D "_WINDOWS" /YX"stdafx.h" /FD /GZ /c
+# SUBTRACT CPP /Fr
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x804 /d "_DEBUG"
@@ -86,7 +87,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib comctl32.lib comdlg32.lib advapi32.lib shell32.lib libpngd.lib libjpeg.lib zlibd.lib  libgtk-win32-2.0.dll.a /nologo /subsystem:windows /pdb:none /debug /machine:I386 /libpath:"F:\lpng143\projects\visualc6\Win32_LIB_Debug" /libpath:"..\..\jpeg-8b"
+# ADD LINK32 Vfw32.lib glu32.lib opengl32.lib msvcrt.lib kernel32.lib user32.lib gdi32.lib comctl32.lib comdlg32.lib advapi32.lib shell32.lib libpngd.lib libjpeg.lib zlibd.lib libgtk-win32-2.0.dll.a /nologo /subsystem:windows /pdb:none /debug /machine:I386 /nodefaultlib /libpath:"F:\lpng143\projects\visualc6\Win32_LIB_Debug" /libpath:"..\..\jpeg-8b"
 
 !ENDIF 
 
@@ -216,10 +217,6 @@ SOURCE=.\res\wyn.bmp
 # Begin Source File
 
 SOURCE=..\res\manifest.xml
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\manifest.xml
 # End Source File
 # End Target
 # End Project

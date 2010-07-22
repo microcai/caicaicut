@@ -141,8 +141,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 6,0,2,1300
- PRODUCTVERSION 2,5,0,4
+ FILEVERSION 9,0,2,1300
+ PRODUCTVERSION 2,8,0,1355
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -160,14 +160,14 @@ BEGIN
             VALUE "Comments", "MicroCai's\0"
             VALUE "CompanyName", "MicroApplicationLib\0"
             VALUE "FileDescription", "Chinese suport for PrtSc\0"
-            VALUE "FileVersion", "6, 0, 2, 1300\0"
+            VALUE "FileVersion", "9, 0, 2, 1300\0"
             VALUE "InternalName", "PrintSreen\0"
             VALUE "LegalCopyright", "Copyright ? 2008\0"
             VALUE "LegalTrademarks", "Free Software\0"
             VALUE "OriginalFilename", "res.dll\0"
             VALUE "PrivateBuild", "zh-cn\0"
             VALUE "ProductName", "PrtSc\0"
-            VALUE "ProductVersion", "2, 5, 0, 4\0"
+            VALUE "ProductVersion", "2, 8, 0, 1355\0"
             VALUE "SpecialBuild", "2052\0"
         END
     END

@@ -88,6 +88,7 @@ static BOOL WINAPI InitInstance(HINSTANCE hInstance)
 	return ret & RegisterClass(&wc);
 
 }
+
 static BOOL WINAPI IsOnlyInstance()
 {
 	HWND pre=FindWindow(_T("##_CaiPrtSc_##MainWindow_Class"),_T("MainWindow"));
@@ -99,23 +100,42 @@ static BOOL WINAPI IsOnlyInstance()
 	return 1;
 }
 
+#if defined( _WIN32)
 int WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE,LPTSTR,int)
+#else
+int main(int argc, char * argv[])
+#endif
 {
+#if defined( _WIN32) 
+	// init us!
 	hInst=hInstance;
 	if(!InitInstance(hInst))return -1;
+#else
+	gtk_init(&argc,&argv);
+#endif
+
+	//avoid multi-instance
 	if(!IsOnlyInstance())return 1;
+
 	//CreateMainWindow
+
 	CreateWindow(_T("##_CaiPrtSc_##MainWindow_Class"),_T("MainWindow"),
 		WS_POPUP,0,0,0,0,0,0,hInst,0);
 	//process cmdline
 	MSG msg;
 	//loop
+#ifdef  _WIN32
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	return msg.wParam;
+	return msg.wParam;	
+#else
+	gtk_main();
+	return 0;
+#endif
+
 }
 
 //全局变量
