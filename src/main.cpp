@@ -1,8 +1,10 @@
-
+Ôªø
 #include "StdAfx.h"
 #include "resource.h"
 #include "PrtSc.h"
+#if !defined( _WIN32)
 #include <gtk/gtk.h>
+#endif
 /*
 extern "C" {
 	WINBASEAPI DWORD WINAPI RtlGetLastWin32Error();
@@ -10,7 +12,7 @@ extern "C" {
 static BOOL WINAPI InitInstance(HINSTANCE hInstance)
 {
 	BOOL		ret;
-	WNDCLASS	wc;	
+	WNDCLASS	wc;
 	INITCOMMONCONTROLSEX InitCtrls;
 	InitCtrls.dwSize  = sizeof(INITCOMMONCONTROLSEX);
 	InitCtrls.dwICC	  = ICC_HOTKEY_CLASS ;
@@ -73,7 +75,7 @@ static BOOL WINAPI InitInstance(HINSTANCE hInstance)
 	wc.lpszClassName = _T("NoteWnd");
 	wc.lpfnWndProc = NoteWndProc;
 	ret &= RegisterClass(&wc);
-	
+
 	wc.cbWndExtra = 0;
 	wc.lpszClassName = _T("CutWnd");
 	wc.lpfnWndProc =CutWndProc;
@@ -106,7 +108,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE,LPTSTR,int)
 int main(int argc, char * argv[])
 #endif
 {
-#if defined( _WIN32) 
+#if defined( _WIN32)
 	// init us!
 	hInst=hInstance;
 	if(!InitInstance(hInst))return -1;
@@ -130,7 +132,7 @@ int main(int argc, char * argv[])
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	return msg.wParam;	
+	return msg.wParam;
 #else
 	gtk_main();
 	return 0;
@@ -138,7 +140,7 @@ int main(int argc, char * argv[])
 
 }
 
-//»´æ÷±‰¡ø
+//ÂÖ®Â±ÄÂèòÈáè
 HINSTANCE	hInst,DllhInst;
 
 HWND	MainWnd;

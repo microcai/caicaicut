@@ -1,4 +1,4 @@
-
+ï»¿
 #include "StdAfx.h"
 #include "resource.h"
 #include "PrtSc.h"
@@ -13,7 +13,7 @@ DWORD WINAPI ViewDevNotes(LPVOID)
 	SetThreadLocale(locale_ID);
 	AutoDeleteString lpWindowName;
 	lpWindowName.LoadString(DllhInst,IDS_DEVNOTECAPTION);
-	
+
 	lstrcat(lpWindowName,_T(__DATE__));
 	main=CreateWindowEx(0,TEXT("NoteWnd"),lpWindowName,WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,0,(HMENU)0,hInst,0);
@@ -56,37 +56,37 @@ static void	BmpToClip(HBITMAP hbitmap)
 		Sleep(10);
 	}
 	if(tryed<100){
-		EmptyClipboard();		
+		EmptyClipboard();
 		SetClipboardData(CF_BITMAP,hbitmap);
 		CloseClipboard();
-	}else{MessageBox(MainWnd,TEXT("¼ôÇÐ°å³¬Ê±"),TEXT("ÄÝ×Ó, :("),0);}
+	}else{MessageBox(MainWnd,TEXT("å‰ªåˆ‡æ¿è¶…æ—¶"),TEXT("å¦®å­, :("),0);}
 }
 static UINT APIENTRY OFNHookProc(HWND hdlg,UINT message,WPARAM wParam,LPARAM lParam);
 static BOOL	GetFileName(LPTSTR filename)
 {
 	AutoDeleteString lpstrTitle;
-	
+
 	lpstrTitle.LoadString(DllhInst,IDS_GTFLNMTITLE);
-	
+
 	OPENFILENAME file={sizeof(OPENFILENAME)};
 	file.hInstance=hInst;
 	file.hwndOwner =MainWnd;
 	file.lpstrDefExt=TEXT("png");
-	file.lpstrFilter=TEXT("PNG¸ñÊ½(*.png)\0*.png\0Î»Í¼ÎÄ¼þ\0*.bmp\0JPEG¸ñÊ½(*.jpg;*.jpeg)\0*.jpg;*.jpeg\0");
-	file.lpstrTitle= lpstrTitle;//TEXT("ÄÝ×Ó£¬±£´æ°É£¬^_^(È¡ÏûÐ´Èë¼ôÇÐ°å,Ë«»÷·Å´ó²é¿´)");
+	file.lpstrFilter=TEXT("PNGæ ¼å¼(*.png)\0*.png\0ä½å›¾æ–‡ä»¶\0*.bmp\0JPEGæ ¼å¼(*.jpg;*.jpeg)\0*.jpg;*.jpeg\0");
+	file.lpstrTitle= lpstrTitle;//TEXT("å¦®å­ï¼Œä¿å­˜å§ï¼Œ^_^(å–æ¶ˆå†™å…¥å‰ªåˆ‡æ¿,åŒå‡»æ”¾å¤§æŸ¥çœ‹)");
 	file.nMaxFile=_MAX_PATH;
 	file.lpstrFile=filename;
 	file.lpfnHook = OFNHookProc;
 	file.Flags=OFN_EXPLORER|OFN_ENABLEHOOK|OFN_HIDEREADONLY|OFN_SHAREAWARE
 		|OFN_ENABLETEMPLATE|OFN_ENABLEINCLUDENOTIFY;
 	file.lpTemplateName = (LPTSTR)_T("tmplate");
-	return GetSaveFileName(&file);	
+	return GetSaveFileName(&file);
 }
 __declspec(thread)	static	HBITMAP	bmp;
 static UINT APIENTRY OFNHookProc(HWND hdlg,UINT message,WPARAM,LPARAM)
 {
 	RECT	rc;
-	//LPOFNOTIFY	
+	//LPOFNOTIFY
 	switch(message)
 	{
 	case WM_LBUTTONDBLCLK:
@@ -123,7 +123,7 @@ DWORD	WINAPI	StoreBMP(HBITMAP	hbmp)
 			BmpToClip(hbmp);
 			AutoDeleteString HasToClipbord;
 			HasToClipbord.LoadString(DllhInst,IDS_TOCLIPBOARD);
-			FlashTray(HasToClipbord,0);//ÒÑ·ÅÈë¼ôÇÐ°å
+			FlashTray(HasToClipbord,0);//å·²æ”¾å…¥å‰ªåˆ‡æ¿
 		}
 		return 0;
 	}
