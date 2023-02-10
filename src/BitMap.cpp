@@ -1,9 +1,12 @@
-
+Ôªø
 #include "StdAfx.h"
 #include <math.h>
 #include "PrtSc.h"
+
+#ifdef HAS_PNGJPEG
 #include <png.h>
 #include <jpeglib.h>
+#endif
 
 static	BOOL SaveBmpToBMPfile(HBITMAP hbmp,LPTSTR file)
 {
@@ -22,18 +25,18 @@ static	BOOL SaveBmpToBMPfile(HBITMAP hbmp,LPTSTR file)
 	bmhdr.biHeight = bmp.bmHeight;
 	bmhdr.biWidth = bmp.bmWidth;
 
-    bmhdr.biSizeImage = (bmhdr.biWidth + 7) /8 
-                                  * bmhdr.biHeight 
-                                 * bmp.bmBitsPixel; 
+    bmhdr.biSizeImage = (bmhdr.biWidth + 7) /8
+                                  * bmhdr.biHeight
+                                 * bmp.bmBitsPixel;
 	if(bmp.bmBitsPixel < 24)
 		bmhdr.biClrUsed = 2^bmp.bmBitsPixel;
 	else bmhdr.biClrUsed = 0;
 	bmhdr.biClrImportant = 0;
 	bmhdr.biCompression = BI_RGB;
-	
-	fsize = (DWORD) (sizeof(BITMAPFILEHEADER) + 
-				bmhdr.biSize + bmhdr.biClrUsed * sizeof(RGBQUAD) 
-					+ bmhdr.biSizeImage); 
+
+	fsize = (DWORD) (sizeof(BITMAPFILEHEADER) +
+				bmhdr.biSize + bmhdr.biClrUsed * sizeof(RGBQUAD)
+					+ bmhdr.biSizeImage);
 
 	hfile = CreateFile(file,GENERIC_READ|GENERIC_WRITE,0,NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,0);
 	if(hfile==INVALID_HANDLE_VALUE)return 0;
@@ -43,11 +46,11 @@ static	BOOL SaveBmpToBMPfile(HBITMAP hbmp,LPTSTR file)
 	{
 		CloseHandle(hmap);
 		CloseHandle(hfile);
-		return 0;	
+		return 0;
 	}
 	((LPBITMAPFILEHEADER)filebase)->bfType = 'MB';
 	((LPBITMAPFILEHEADER)filebase)->bfSize = fsize;
-	((LPBITMAPFILEHEADER)filebase)->bfOffBits = 
+	((LPBITMAPFILEHEADER)filebase)->bfOffBits =
 		sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + sizeof(RGBQUAD) * bmhdr.biClrUsed ;
 	memcpy((LPBYTE)filebase + sizeof(BITMAPFILEHEADER),&bmhdr,sizeof(bmhdr));
 
@@ -59,20 +62,23 @@ static	BOOL SaveBmpToBMPfile(HBITMAP hbmp,LPTSTR file)
 	DeleteObject(hbmp);
 	UnmapViewOfFile(filebase);
 	CloseHandle(hmap);
-	CloseHandle(hfile);	
+	CloseHandle(hfile);
 	return 1;
 }
 
+#ifdef HAS_PNGJPEG
 static void __cdecl user_err_fn(png_structp, png_const_charp err)
 {
-	
-}
 
+}
+#endif
+
+#ifdef HAS_PNGJPEG
 static	BOOL SaveBmpToPNGfile(HBITMAP hbmp,LPTSTR file)
 {
 	BITMAP	bmp;
 	FILE * fp = NULL;
-	
+
 	if(!GetObject(hbmp,sizeof(BITMAP),&bmp))return FALSE;
 
 	fp = _tfopen(file,TEXT("wb"));
@@ -100,7 +106,7 @@ static	BOOL SaveBmpToPNGfile(HBITMAP hbmp,LPTSTR file)
 		png_destroy_write_struct(&png_ptr,NULL);
 		return FALSE;
 	}
-	
+
 	if(setjmp(png_jmpbuf(png_ptr)))
 	{
 		png_destroy_write_struct(&png_ptr,&png_info_ptr);
@@ -113,7 +119,7 @@ static	BOOL SaveBmpToPNGfile(HBITMAP hbmp,LPTSTR file)
 	int color = PNG_COLOR_TYPE_RGB_ALPHA;
 	if(bmp.bmBitsPixel < 32)
 		color = PNG_COLOR_TYPE_RGB;
-	
+
 	LONG	row_length;
 	BYTE * row_bytes;
 	PBYTE * rows_bytes  =(PBYTE*) malloc( bmp.bmHeight * sizeof(png_byte *));
@@ -121,17 +127,17 @@ static	BOOL SaveBmpToPNGfile(HBITMAP hbmp,LPTSTR file)
 	row_length =bmp.bmHeight * bmp.bmWidthBytes;
 
 	row_bytes = (PBYTE) png_malloc(png_ptr,row_length);
-		
-	GetBitmapBits(hbmp,row_length,row_bytes);	
+
+	GetBitmapBits(hbmp,row_length,row_bytes);
 
 	if(bmp.bmBitsPixel >=24)
 	{
 		for ( LONG i=0 ,j=0; i < bmp.bmHeight ; i ++ ,j +=bmp.bmWidthBytes )
 		{
 			rows_bytes[i] = row_bytes + j;
-			if(color & PNG_COLOR_MASK_ALPHA)		
+			if(color & PNG_COLOR_MASK_ALPHA)
 				for(LONG k=0; k < bmp.bmWidthBytes ; k+= 4)
-					rows_bytes[i][k+3] = 255;		
+					rows_bytes[i][k+3] = 255;
 		}
 	}else //16 bit
 	{
@@ -143,17 +149,17 @@ static	BOOL SaveBmpToPNGfile(HBITMAP hbmp,LPTSTR file)
 			for(int  j=0,k=0; j < bmp.bmWidthBytes; j+=2, k+=3)
 			{
 
-				WORD   Color;//¥Ê16bitµƒ—’…´ 
+				WORD   Color;//Â≠ò16bitÁöÑÈ¢úËâ≤
 
-				double   Red,Green,Blue; 
+				double   Red,Green,Blue;
 
 				Color = *(PWORD)(row_bytes + i * bmp.bmWidthBytes + j );
 
 
-				Blue=(Color&0xF800)>> 11; 
+				Blue=(Color&0xF800)>> 11;
 
-				Green=(Color&0x7e0)>> 5; 
-				
+				Green=(Color&0x7e0)>> 5;
+
 				Red=(Color&0x1F);
 
 				rows_bytes[i][k] = (BYTE)(Red * 256  / 32 +0.5);
@@ -162,7 +168,7 @@ static	BOOL SaveBmpToPNGfile(HBITMAP hbmp,LPTSTR file)
 			}
 		}
 	}
-	
+
 	png_set_IHDR(png_ptr,png_info_ptr,bmp.bmWidth,bmp.bmHeight,8,
 		color, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE,
 		PNG_FILTER_TYPE_BASE);
@@ -190,12 +196,15 @@ static	BOOL SaveBmpToPNGfile(HBITMAP hbmp,LPTSTR file)
 	}
 
 	free(rows_bytes);
-	free(row_bytes);	
+	free(row_bytes);
 	DeleteObject(hbmp);
 	fclose(fp);
+
 	return TRUE;
 }
+#endif
 
+#ifdef HAS_PNGJPEG
 static BOOL SaveBmpToJPGfile(HBITMAP hbmp,LPTSTR file)
 {
 	LONG i;
@@ -203,13 +212,13 @@ static BOOL SaveBmpToJPGfile(HBITMAP hbmp,LPTSTR file)
 	PVOID	 bmp_data ;
 	BITMAP	bmp;
 	FILE * fp = NULL;
-	
+
 	if(!GetObject(hbmp,sizeof(BITMAP),&bmp))return FALSE;
 
 	bmp_length = bmp.bmWidthBytes * bmp.bmHeight;
-	
+
 	fp = _tfopen(file,TEXT("wb"));
-	
+
 	if(!fp)
 	{
 		DeleteObject(hbmp);
@@ -231,7 +240,7 @@ static BOOL SaveBmpToJPGfile(HBITMAP hbmp,LPTSTR file)
 	cinfo.in_color_space = JCS_RGB;
 
 	jpeg_set_defaults(&cinfo);
-	
+
 //cinfo.err = & err;
 
 	cinfo.err = jpeg_std_error(&err);
@@ -241,7 +250,7 @@ static BOOL SaveBmpToJPGfile(HBITMAP hbmp,LPTSTR file)
 	jpeg_start_compress(&cinfo, TRUE);
 
 	bmp_data = malloc(bmp_length);
-	
+
 	GetBitmapBits(hbmp,bmp_length,bmp_data);
 
 	PBYTE row_pointer;
@@ -249,7 +258,7 @@ static BOOL SaveBmpToJPGfile(HBITMAP hbmp,LPTSTR file)
 	if(bmp.bmBitsPixel != 24)
 		row_pointer = (PBYTE)malloc(bmp.bmWidth * 3);
 
-	while (cinfo.next_scanline < cinfo.image_height) 
+	while (cinfo.next_scanline < cinfo.image_height)
 	{
 		// 32bit to 24 bit, ro 16 bit to 24 bit
 
@@ -272,24 +281,24 @@ static BOOL SaveBmpToJPGfile(HBITMAP hbmp,LPTSTR file)
 		case 16:
 			for ( i=0; i < bmp.bmWidth ; i++)
 			{
-				WORD   Color;//¥Ê16bitµƒ—’…´ 
-				
-				double   Red,Green,Blue; 
-				
+				WORD   Color;//Â≠ò16bitÁöÑÈ¢úËâ≤
+
+				double   Red,Green,Blue;
+
 				Color = *(PWORD)((PBYTE)bmp_data + cinfo.next_scanline * bmp.bmWidthBytes + i*2 );
-								
-				Red=(Color&0xF800)>> 11; 
-				
-				Green=(Color&0x7e0)>> 5; 
-				
+
+				Red=(Color&0xF800)>> 11;
+
+				Green=(Color&0x7e0)>> 5;
+
 				Blue=(Color&0x1F);
-				
+
 				row_pointer[i*3]= (BYTE)(Red * 256  / 32 +0.5);
 				row_pointer[i*3+1] = (BYTE)(Green * 256  / 64 +0.5);
 				row_pointer[i*3+2] = (BYTE)(Blue * 256  / 32 +0.5);
 			}
-			jpeg_write_scanlines(&cinfo, &row_pointer, 1);			
-		}		
+			jpeg_write_scanlines(&cinfo, &row_pointer, 1);
+		}
 	}
 
 	if(row_pointer)
@@ -302,34 +311,44 @@ static BOOL SaveBmpToJPGfile(HBITMAP hbmp,LPTSTR file)
 	DeleteObject(hbmp);
 	return FALSE;
 }
+#endif
 
 typedef BOOL(* FileTypeFunc)(HBITMAP hbmp,LPTSTR file);
-static FileTypeFunc SaveBmp2File[]={SaveBmpToBMPfile,SaveBmpToPNGfile,SaveBmpToJPGfile,0};
+static FileTypeFunc SaveBmp2File[]={SaveBmpToBMPfile,
+#ifdef HAS_PNGJPEG
+,SaveBmpToPNGfile
+,SaveBmpToJPGfile,
+#endif
+0};
 
 BOOL	SaveBmpToFile(HBITMAP hbmp,LPTSTR file)
 {
-	//∏˘æ›¿©’π√˚
+	//Ê†πÊçÆÊâ©Â±ïÂêç
 	LPTSTR lpstrExt	= file + lstrlen(file) - 1;
 
 	while (*lpstrExt!=TEXT('.'))
 	{
 		lpstrExt--;
 	}
-	
+
 	if(lstrcmpi(lpstrExt,TEXT(".bmp"))==0)
 	{
 		return (SaveBmp2File[0])(hbmp,file);
-	}else if(lstrcmpi(lpstrExt,TEXT(".png"))==0)
+	}
+#ifdef HAS_PNGJPEG
+	else if(lstrcmpi(lpstrExt,TEXT(".png"))==0)
 	{
 		return (SaveBmp2File[1])(hbmp,file);
-	}else if(lstrcmpi(lpstrExt,TEXT(".jpg"))==0)
-	{
-		return (SaveBmp2File[2])(hbmp,file);
-	}else if(lstrcmpi(lpstrExt,TEXT(".jpeg"))==0)
+	}
+	else if(lstrcmpi(lpstrExt,TEXT(".jpg"))==0)
 	{
 		return (SaveBmp2File[2])(hbmp,file);
 	}
+	else if(lstrcmpi(lpstrExt,TEXT(".jpeg"))==0)
+	{
+		return (SaveBmp2File[2])(hbmp,file);
+	}
+#endif
 	return FALSE;
 }
-
 
