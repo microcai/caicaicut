@@ -7,7 +7,7 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "afxres.h"
+#include "winres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -27,18 +27,18 @@ LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE DISCARDABLE
 BEGIN
     "../resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE DISCARDABLE
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE DISCARDABLE
 BEGIN
     "\r\n"
     "\0"
@@ -53,7 +53,7 @@ END
 //
 
 IDD_DIALOG_SETTING DIALOG DISCARDABLE  200, 100, 217, 118
-STYLE DS_NOIDLEMSG | DS_3DLOOK | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | 
+STYLE DS_NOIDLEMSG | DS_3DLOOK | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP |
     WS_VISIBLE | WS_CAPTION
 CAPTION "设置"
 FONT 10, "System"
@@ -61,20 +61,20 @@ BEGIN
     DEFPUSHBUTTON   "确定",IDOK,167,7,44,14
     PUSHBUTTON      "取消",IDCANCEL,167,28,44,14
     GROUPBOX        "热键设置",IDC_STATIC,7,7,152,104
-    CONTROL         "HotKey1",IDC_HOTKEY1,"msctls_hotkey32",WS_BORDER | 
+    CONTROL         "HotKey1",IDC_HOTKEY1,"msctls_hotkey32",WS_BORDER |
                     WS_TABSTOP,65,17,88,13
     LTEXT           "区域剪切:",IDC_STATIC,13,68,38,9
     LTEXT           "抓取活动窗口",IDC_STATIC,13,43,49,9
-    CONTROL         "HotKey1",IDC_HOTKEY2,"msctls_hotkey32",WS_BORDER | 
+    CONTROL         "HotKey1",IDC_HOTKEY2,"msctls_hotkey32",WS_BORDER |
                     WS_TABSTOP,65,41,88,13
     LTEXT           "抓取屏幕",IDC_STATIC,13,17,37,9
-    CONTROL         "HotKey1",IDC_HOTKEY3,"msctls_hotkey32",WS_BORDER | 
+    CONTROL         "HotKey1",IDC_HOTKEY3,"msctls_hotkey32",WS_BORDER |
                     WS_TABSTOP,65,65,88,13
     LTEXT           "退出",IDC_STATIC,13,96,22,9
-    CONTROL         "HotKey1",IDC_HOTKEY4,"msctls_hotkey32",WS_BORDER | 
+    CONTROL         "HotKey1",IDC_HOTKEY4,"msctls_hotkey32",WS_BORDER |
                     WS_TABSTOP,65,98,88,13
     GROUPBOX        "截图鼠标",IDC_STATIC,168,62,43,49
-    CONTROL         "自定义",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "自定义",IDC_CHECK1,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,171,72,37,10
 END
 
@@ -92,7 +92,7 @@ END
 // Menu
 //
 
-VIEWER MENU DISCARDABLE 
+VIEWER MENU DISCARDABLE
 BEGIN
     POPUP "popup"
     BEGIN
@@ -103,7 +103,7 @@ BEGIN
     END
 END
 
-MENU MENU DISCARDABLE 
+MENU MENU DISCARDABLE
 BEGIN
     POPUP "popup"
     BEGIN
@@ -123,7 +123,7 @@ BEGIN
     END
 END
 
-JUNK MENU DISCARDABLE 
+JUNK MENU DISCARDABLE
 BEGIN
     POPUP "pop"
     BEGIN
@@ -186,7 +186,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO DISCARDABLE
 BEGIN
     IDD_DIALOG_SETTING, DIALOG
     BEGIN
@@ -211,7 +211,7 @@ WYN                     BITMAP  DISCARDABLE     "res\\wyn.bmp"
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE DISCARDABLE
 BEGIN
     IDS_HOTKEYERRINFO       "热键有冲突"
     IDS_HOTKEYERRTITLE      "请最好重新设定热键"
